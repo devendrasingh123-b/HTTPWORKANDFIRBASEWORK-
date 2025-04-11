@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<h1>HTML Form </h1>
+
+
+<form action="" id="myForm">
+
+<fieldset>
+
+<legend>one form</legend>
+
+<label for="name">name</label>
+<input type="text" id="name" required placeholder="enter your name" name="name">
+
+<label for="Email">Email</label>
+<input type="email" id="Eamil" required name="Email">
+
+<br>
+
+<label for="password">Password</label>
+<input type="password" name="pass" id="password">
+
+<br>
+
+
+<button type="submit">click</button>
+
+</fieldset>
+</form>
+
+
+<div id="container">
+
+
+</div>
+
+
+</body>
+</html>
+
+
+<script>
+
+const form = document.getElementById("myForm");
+
+form.addEventListener("submit", function (event) {
+  event.preventDefault(); 
+
+  // Data collect
+
+
+  const formData = new FormData(form);
+  const username = formData.get("name");
+  const email = formData.get("Email");
+
+let pass=formData.get("pass")
+
+//   console.log("Username:", username);
+//   console.log("Email:", email);
+//   console.log(pass);
+
+// let data=`name:${username} , email :${email} ,password:${pass}`
+
+// console.log(data)
+
+  async function fet(){
+    try {
+        let Fecth= await fetch("https://fakestoreapi.com/products",{
+            method: "POST",
+            headers:{
+                "Content-Type": "application/json"
+            },
+            body:JSON.stringify({
+                name:username,
+                email:email,
+                password:pass
+            })
+    
+        })
+    
+    
+        let rowdata= await  Fecth.json()
+        console.log(Fecth)
+        console.log(rowdata)
+        let div=document.getElementById("container").innerText=Fecth.ok
+
+
+    } catch (error) {
+     
+        console.log(error)
+
+    }
+
+    
+
+      
+  }   
+
+  fet()
+
+});
+
+
+</script>
+
+<!-- 
+POST https://mockapi.io/users
+Content-Type: application/json
+Body: { "name": "John Doe", "email": "john@example.com", "password": "123456" } -->
+
